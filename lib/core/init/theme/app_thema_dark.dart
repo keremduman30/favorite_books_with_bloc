@@ -16,9 +16,7 @@ class AppThemeDark extends AppTheme implements IDarkTheme {
 
   @override
   ThemeData get theme => ThemeData.dark().copyWith(
-        appBarTheme: AppBarTheme(
-            iconTheme: IconThemeData(color: colorScheme.onBackground),
-            backgroundColor: colorScheme.primary),
+        appBarTheme: AppBarTheme(iconTheme: IconThemeData(color: colorScheme.onBackground), backgroundColor: colorScheme.primary),
         iconTheme: const IconThemeData(color: Colors.white),
         scaffoldBackgroundColor: colorScheme.primary,
         textTheme: textTheme(),

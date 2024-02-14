@@ -42,12 +42,13 @@ class DatabaseHelper {
     }
   }
 
-  Future<int> deleteBook(String id) async {
+  Future<bool> deleteBook(int id) async {
     final db = await instance.database;
     try {
-      return await db.delete("books", where: 'id=?', whereArgs: [id]);
+      await db.delete("books", where: "id=?", whereArgs: [id]);
+      return true;
     } catch (e) {
-      return 0;
+      return false;
     }
   }
 

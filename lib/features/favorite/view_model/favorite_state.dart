@@ -2,8 +2,8 @@ import 'package:equatable/equatable.dart';
 import 'package:favorite_books/features/home/model/home_model.dart';
 
 class FavoriteState extends Equatable {
-  final List<BookModel>? dbListModel;
-  final bool? loading;
+  final List<BookModel> dbListModel;
+  final bool loading;
 
   const FavoriteState({required this.dbListModel, this.loading = false});
   @override
