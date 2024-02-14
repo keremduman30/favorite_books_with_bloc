@@ -60,7 +60,7 @@ class HomeViewModel extends Cubit<HomeState> {
 
   void clickIconBtn() {
     NavigationService.instance.navigatorToPage(path: NavigationConstant.favorite);
-    emit(state.copyWith(books: []));
+    emit(state.copyWith(books: [], searchText: ""));
     searchController.clear();
     focusNode?.unfocus();
   }
