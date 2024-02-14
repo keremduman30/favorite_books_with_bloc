@@ -1,6 +1,6 @@
 # favorite_books
 
-A new Flutter project.
+Bu uygulama, Google Books API'sini kullanarak kitapları arama, listeleme, favorilere ekleme ve favorilerden kaldırma gibi işlevler sunar. Ayrıca bu uygulama, kullanıcıların yerel bir SQLite veritabanında kitapları favorilere ekleyip kaldırmasını sağlar.
 
 ## Getting Started
 
