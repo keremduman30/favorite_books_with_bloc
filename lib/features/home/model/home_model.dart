@@ -1,4 +1,5 @@
 class BookModel {
+  int? id;
   String? title;
   String? subtitle;
   String? description;
@@ -18,7 +19,8 @@ class BookModel {
       this.pageCount,
       this.imageLinks,
       this.authors,
-      this.isFavori = false});
+      this.isFavori = false,
+      this.id});
 
   BookModel.fromJson(Map<String, dynamic> json) {
     title = json['title'];
@@ -38,6 +40,7 @@ class BookModel {
     description = json['description'];
     publishedDate = json['publishedDate'];
     pageCount = json['pageCount'];
+    id = json["id"];
     isFavori = true;
     imageLinks = ImageLinks.fromJson(json);
   }

@@ -36,6 +36,7 @@ class CustomTextFormField extends StatelessWidget {
       focusNode: focusNode,
       obscureText: hideText ?? false,
       controller: controller,
+      autofocus: false,
       cursorColor: context.colors.secondary,
       maxLines: 1,
       decoration: InputDecoration(

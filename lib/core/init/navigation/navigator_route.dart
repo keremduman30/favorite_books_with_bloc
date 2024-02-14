@@ -1,3 +1,4 @@
+import 'package:favorite_books/features/favorite/view/favorite_view.dart';
 import 'package:flutter/material.dart';
 
 import '../../../features/home/view/home_view.dart';
@@ -15,9 +16,11 @@ class NavigationRoute {
     switch (args.name) {
       case NavigationConstant.home:
         return normalNavigate(const HomeView());
+      case NavigationConstant.favorite:
+        return normalNavigate(const FavoriteView());
 
       default:
-        return normalNavigate(const Text("Not found"));
+        return normalNavigate(const Center(child: Text("Page Not found")));
     }
   }
 

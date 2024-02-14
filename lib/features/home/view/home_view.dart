@@ -6,6 +6,7 @@ import 'package:favorite_books/core/base/functions.dart';
 import 'package:favorite_books/core/base/view/base_view.dart';
 import 'package:favorite_books/core/constant/app/image_constant.dart';
 import 'package:favorite_books/core/extension/context_extension.dart';
+
 import 'package:favorite_books/features/home/view_model/home_state.dart';
 import 'package:favorite_books/features/home/view_model/home_view_model.dart';
 import 'package:favorite_books/locator.dart';
@@ -17,14 +18,19 @@ class HomeView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-        appBar: AppBar(
-          title: Text("Favori Kitaplarım", style: context.textThem.titleLarge),
-          actions: [IconButton(onPressed: () {}, icon: const Icon(Icons.favorite))],
-        ),
-        body: GestureDetector(
-          onTap: () => hideKeyboard(),
-          child: Padding(
+    return GestureDetector(
+      onTap: () => hideKeyboard(),
+      child: Scaffold(
+          appBar: AppBar(
+            title: Text("Favori Kitaplarım", style: context.textThem.titleLarge),
+            actions: [
+              IconButton(
+                onPressed: () => locator<HomeViewModel>().clickIconBtn(),
+                icon: const Icon(Icons.favorite),
+              )
+            ],
+          ),
+          body: Padding(
               padding: context.paddingLowPlusHorizontal,
               child: BaseView<HomeViewModel, HomeState>(
                 onPageBuilder: (context, viewModel, state) => Column(
@@ -42,6 +48,7 @@ class HomeView extends StatelessWidget {
                             height: 40.h,
                             child: CustomTextFormField(
                               controller: locator<HomeViewModel>().searchController,
+                              focusNode: locator<HomeViewModel>().focusNode,
                               onChanged: (p0) => viewModel.changeText(p0.trim().toLowerCase()),
                               prefixIcon: Icon(Icons.search, color: context.colors.secondary, size: 25),
                             ),
@@ -65,37 +72,24 @@ class HomeView extends StatelessWidget {
                       child: state.books.isEmpty
                           ? Center(
                               child: CustomContainer(width: 80.w, height: 80.h, image: AssetImage(ImageConstant.instance.book), fit: BoxFit.cover))
-                          : buildListView(state, context),
+                          : state.loading
+                              ? Center(child: CircularProgressIndicator(color: context.colors.secondary))
+                              : buildListView(state, context),
                     )
                   ],
                 ),
-              )),
-        ));
+              ))),
+    );
   }
 
   Widget buildListView(HomeState state, BuildContext context) {
-    return state.loading
-        ? Center(child: CircularProgressIndicator(color: context.colors.secondary))
-        : ListView.builder(
-            itemCount: state.books.length,
-            itemBuilder: (context, index) {
-              final model = state.books[index];
-              return Padding(
-                padding: context.paddingLowPlusVertical,
-                child: CustomContainer(
-                  height: 130.h,
-                  width: double.infinity,
-                  borderWidth: 1,
-                  borderColor: model.isFavori != null && model.isFavori! ? context.colors.outline : context.colors.onPrimary,
-                  padding: context.paddingLow,
-                  child: BooksItemCard(
-                    model: model,
-                    onDoublePressed: () => locator<HomeViewModel>().ondoublePressed(model),
-                  ),
-                ),
-              );
-            },
-          );
+    return ListView.builder(
+      itemCount: state.books.length,
+      itemBuilder: (context, index) {
+        final model = state.books[index];
+        return BooksItemCard(onDoublePressed: () => locator<HomeViewModel>().ondoublePressed(model), model: model);
+      },
+    );
   }
 }
 
