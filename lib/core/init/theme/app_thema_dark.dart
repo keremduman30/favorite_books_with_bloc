@@ -20,6 +20,7 @@ class AppThemeDark extends AppTheme implements IDarkTheme {
             iconTheme: IconThemeData(color: colorScheme.onBackground),
             backgroundColor: colorScheme.primary),
         iconTheme: const IconThemeData(color: Colors.white),
+        scaffoldBackgroundColor: colorScheme.primary,
         textTheme: textTheme(),
         colorScheme: colorScheme,
       );
@@ -30,9 +31,14 @@ class AppThemeDark extends AppTheme implements IDarkTheme {
           displaySmall: textThemeDark.headline3,
           headlineMedium: textThemeDark.headline4,
           headlineSmall: textThemeDark.headline5,
-          bodyMedium: textThemeDark.headline7,
+          bodyMedium: textThemeDark.headline10,
           bodySmall: textThemeDark.headline8,
           titleLarge: textThemeDark.headline6,
+          titleMedium: textThemeDark.headline7,
+          titleSmall: textThemeDark.headline8,
+          labelLarge: textThemeDark.headline9,
+          labelMedium: textThemeDark.headline10,
+          labelSmall: textThemeDark.headline11,
         );
   }
 

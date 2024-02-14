@@ -12,6 +12,7 @@ class CustomContainer extends StatelessWidget {
   final Widget? child;
   final EdgeInsetsGeometry? padding;
   final List<BoxShadow>? boxShadow;
+  final BoxFit? fit;
   const CustomContainer(
       {super.key,
       this.image,
@@ -24,7 +25,7 @@ class CustomContainer extends StatelessWidget {
       this.width,
       this.height,
       this.boxShadow,
-      this.borderRadius});
+      this.borderRadius, this.fit});
 
   @override
   Widget build(BuildContext context) {
@@ -41,7 +42,7 @@ class CustomContainer extends StatelessWidget {
               ? BorderRadius.circular(borderRadiusAll!)
               : borderRadius,
           image: image != null
-              ? DecorationImage(image: image!, fit: BoxFit.contain)
+              ? DecorationImage(image: image!, fit:fit ?? BoxFit.contain)
               : null,
           boxShadow: boxShadow),
       child: child,
