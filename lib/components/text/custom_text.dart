@@ -6,15 +6,27 @@ class CustomText extends StatelessWidget {
   final double? paddingVertical;
   final double? paddingHorizantol;
   final String text;
-  const CustomText({super.key, this.style, required this.text, this.paddingVertical, this.paddingHorizantol});
+  final int? maxLines;
+  final TextOverflow? overflow;
+  const CustomText(
+      {super.key,
+      this.style,
+      required this.text,
+      this.paddingVertical,
+      this.paddingHorizantol,
+      this.maxLines,
+      this.overflow});
 
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: EdgeInsets.symmetric(horizontal: paddingHorizantol ?? 0, vertical: paddingVertical ?? 0),
+      padding: EdgeInsets.symmetric(
+          horizontal: paddingHorizantol ?? 0, vertical: paddingVertical ?? 0),
       child: Text(
         text,
-        style: style ?? context.textThem.titleSmall,
+        maxLines: maxLines,
+        overflow: overflow,
+        style: style ?? context.textThem.labelLarge,
       ),
     );
   }

@@ -1,3 +1,4 @@
+import 'package:favorite_books/core/extension/context_extension.dart';
 import 'package:favorite_books/core/extension/string_extension.dart';
 import 'package:flutter/material.dart';
 
@@ -30,18 +31,21 @@ class CustomTextFormField extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return TextFormField(
+      scrollPadding: context.paddingLow,
       onChanged: onChanged,
       focusNode: focusNode,
       obscureText: hideText ?? false,
       controller: controller,
+      cursorColor: context.colors.secondary,
+      maxLines: 1,
       decoration: InputDecoration(
-        hintText: hintText,
-        counterText: "",
-        border: border ?? InputBorder.none,
-        prefixIcon: prefixIcon,
-        suffixIcon: suffixIcon,
-        hintStyle: hintStyle,
-      ),
+          hintText: hintText,
+          counterText: "",
+          border: border ?? InputBorder.none,
+          prefixIcon: prefixIcon,
+          suffixIcon: suffixIcon,
+          hintStyle: hintStyle,
+          isDense: true),
       validator: validator ?? (value) => value?.validator,
     );
   }

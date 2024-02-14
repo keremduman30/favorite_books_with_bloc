@@ -6,8 +6,8 @@ class ImageConstant {
   }
 
   ImageConstant._init();
-  final register = "no_image.".toPng;
-
+  final noImage = "no_image".toPng;
+  final book = "book".toPng;
 }
 
 extension _ImagePathExtension on String {

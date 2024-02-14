@@ -1,4 +1,16 @@
+import 'package:favorite_books/components/buttons/rounded_elevated_btn.dart';
+import 'package:favorite_books/components/card/books_item_card.dart';
+import 'package:favorite_books/components/container/custom_container.dart';
+import 'package:favorite_books/components/text_field/custom_text_form_field.dart';
+import 'package:favorite_books/core/base/functions.dart';
+import 'package:favorite_books/core/base/view/base_view.dart';
+import 'package:favorite_books/core/constant/app/image_constant.dart';
+import 'package:favorite_books/core/extension/context_extension.dart';
+import 'package:favorite_books/features/home/view_model/home_state.dart';
+import 'package:favorite_books/features/home/view_model/home_view_model.dart';
+import 'package:favorite_books/locator.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class HomeView extends StatelessWidget {
   const HomeView({super.key});
@@ -6,17 +18,84 @@ class HomeView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(elevation: 0),
-      // backgroundColor: const Color.fromRGBO(229, 229, 229, 1),
-      body: const Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Text("kerem dman")
+        appBar: AppBar(
+          title: Text("Favori Kitaplarım", style: context.textThem.titleLarge),
+          actions: [IconButton(onPressed: () {}, icon: const Icon(Icons.favorite))],
+        ),
+        body: GestureDetector(
+          onTap: () => hideKeyboard(),
+          child: Padding(
+              padding: context.paddingLowPlusHorizontal,
+              child: BaseView<HomeViewModel, HomeState>(
+                onPageBuilder: (context, viewModel, state) => Column(
+                  children: [
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      children: [
+                        Expanded(
+                          child: CustomContainer(
+                            padding: const EdgeInsets.only(right: 5),
+                            borderWidth: 1,
+                            borderColor: context.colors.secondary.withOpacity(0.7),
+                            borderRadiusAll: 5,
+                            height: 40.h,
+                            child: CustomTextFormField(
+                              controller: locator<HomeViewModel>().searchController,
+                              onChanged: (p0) => viewModel.changeText(p0.trim().toLowerCase()),
+                              prefixIcon: Icon(Icons.search, color: context.colors.secondary, size: 25),
+                            ),
+                          ),
+                        ),
+                        Padding(
+                          padding: context.paddingLowHorizontal,
+                          child: RoundedElevatedButtonWidget(
+                            width: 100.w,
+                            height: 30.h,
+                            radiusAll: 3,
+                            backgroundColor: context.colors.onPrimary,
+                            onPressed: () => viewModel.clickSearchButton(),
+                            btnText: "Search",
+                            textStyle: context.textThem.titleSmall,
+                          ),
+                        ),
+                      ],
+                    ),
+                    Expanded(
+                      child: state.books.isEmpty
+                          ? Center(
+                              child: CustomContainer(width: 80.w, height: 80.h, image: AssetImage(ImageConstant.instance.book), fit: BoxFit.cover))
+                          : buildListView(state, context),
+                    )
+                  ],
+                ),
+              )),
+        ));
+  }
 
-          // buildListviewHorz(context)
-        ],
-      ),
-    );
+  Widget buildListView(HomeState state, BuildContext context) {
+    return state.loading
+        ? Center(child: CircularProgressIndicator(color: context.colors.secondary))
+        : ListView.builder(
+            itemCount: state.books.length,
+            itemBuilder: (context, index) {
+              final model = state.books[index];
+              return Padding(
+                padding: context.paddingLowPlusVertical,
+                child: CustomContainer(
+                  height: 130.h,
+                  width: double.infinity,
+                  borderWidth: 1,
+                  borderColor: model.isFavori != null && model.isFavori! ? context.colors.outline : context.colors.onPrimary,
+                  padding: context.paddingLow,
+                  child: BooksItemCard(
+                    model: model,
+                    onDoublePressed: () => locator<HomeViewModel>().ondoublePressed(model),
+                  ),
+                ),
+              );
+            },
+          );
   }
 }
 

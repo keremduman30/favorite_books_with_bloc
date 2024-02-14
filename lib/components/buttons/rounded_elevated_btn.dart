@@ -8,7 +8,16 @@ class RoundedElevatedButtonWidget extends StatelessWidget {
   final TextStyle? textStyle;
   final VoidCallback onPressed;
   final String btnText;
-  const RoundedElevatedButtonWidget({super.key, this.width, this.height, required this.backgroundColor, this.textStyle, required this.onPressed, required this.btnText});
+  final double? radiusAll;
+  const RoundedElevatedButtonWidget(
+      {super.key,
+      this.width,
+      this.height,
+      required this.backgroundColor,
+      this.textStyle,
+      required this.onPressed,
+      required this.btnText,
+      this.radiusAll});
 
   @override
   Widget build(BuildContext context) {
@@ -16,12 +25,16 @@ class RoundedElevatedButtonWidget extends StatelessWidget {
       width: width ?? 220.w,
       height: height ?? 40.h,
       child: ElevatedButton(
-        onPressed:onPressed,
+        onPressed: onPressed,
         style: ElevatedButton.styleFrom(
           backgroundColor: backgroundColor,
-          shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
+          shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(radiusAll ?? 10)),
         ),
-        child:  Text(btnText,style: textStyle,),
+        child: Text(
+          btnText,
+          style: textStyle,
+        ),
       ),
     );
   }
